@@ -1,0 +1,32 @@
+services:
+  postgres_products:
+    image: postgres:15-alpine
+    container_name: products_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: products_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_products_data:/var/lib/postgresql/data
+      - ./databases/postgresql/product-db/products_init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  postgres_ratings:
+    image: postgres:15-alpine
+    container_name: ratings_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ratings_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_ratings_data:/var/lib/postgresql/data
+      - ./databases/postgresql/rating-db/ratings_init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres_products_data:
+  postgres_ratings_data:
